@@ -1,4 +1,5 @@
 import { AppRegistry } from "react-native";
-import Index from "./app/Index";
 
-AppRegistry.registerComponent("reduxlearningsimple", () => Index);
+import App from "./app/app";
+
+AppRegistry.registerComponent("reduxlearningsimple", () => App);

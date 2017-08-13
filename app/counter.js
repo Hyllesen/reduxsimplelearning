@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-export default class Index extends Component {
+class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,29 +21,26 @@ export default class Index extends Component {
   }
 
   onPressIncrement() {
-    this.setState({
-      count: this.state.count + 1
-    });
+    this.props.increment();
   }
 
   onPressDecrement() {
-    this.setState({
-      count: this.state.count - 1
-    });
+    this.props.decrement();
   }
 
   render() {
+    const { increment, decrement, count, clear } = this.props;
     const { countViewStyle, container, welcome } = styles;
     return (
       <View style={container}>
         <View style={countViewStyle}>
-          <Button onPress={this.onPressIncrement} title="+" color="#008000" />
+          <Button onPress={increment} title="+" color="#008000" />
           <Text style={welcome}>
-            {this.state.count}
+            {count}
           </Text>
-          <Button onPress={this.onPressDecrement} title="-" color="#841584" />
+          <Button onPress={decrement} title="-" color="#841584" />
         </View>
-        <Button onPress={this.clearNumber} title="Clear" color="#030303" />
+        <Button onPress={clear} title="Clear" color="#030303" />
       </View>
     );
   }
@@ -68,3 +67,26 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   }
 });
+
+Counter.propTypes = {
+  increment: PropTypes.func.isRequired,
+  decrement: PropTypes.func.isRequired,
+  clear: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    count: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    increment: () => dispatch({ type: "INCREMENT" }),
+    decrement: () => dispatch({ type: "DECREMENT" }),
+    clear: () => dispatch({ type: "CLEAR" })
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
