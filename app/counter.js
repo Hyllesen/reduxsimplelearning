@@ -4,30 +4,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      count: 0
-    };
-    this.onPressIncrement = this.onPressIncrement.bind(this);
-    this.onPressDecrement = this.onPressDecrement.bind(this);
-    this.clearNumber = this.clearNumber.bind(this);
-  }
-
-  clearNumber() {
-    this.setState({
-      count: 0
-    });
-  }
-
-  onPressIncrement() {
-    this.props.increment();
-  }
-
-  onPressDecrement() {
-    this.props.decrement();
-  }
-
   render() {
     const { increment, decrement, count, clear } = this.props;
     const { countViewStyle, container, welcome } = styles;
